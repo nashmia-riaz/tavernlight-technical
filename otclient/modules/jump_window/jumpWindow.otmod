@@ -1,0 +1,10 @@
+Module
+  name: jump_window 
+  description: Display a players spells with their appropriate information 
+  author: BeniS 
+  website: www.otclient.info 
+  sandboxed: true 
+  scripts: [ jumpWindow.lua ] 
+  @onLoad: init() 
+  @onUnload: terminate() 
+  
