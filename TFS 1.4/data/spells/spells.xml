@@ -69,6 +69,10 @@
 		<vocation name="Druid" />
 		<vocation name="Elder Druid" />
 	</instant>
+	<instant group="attack" spellid="1182" name="Tornado Storm" words="cast tornado storm" level="1" mana="1" premium="0" selftarget="1" cooldown="1" groupcooldown="1" needlearn="0" script="attack/tornado_storm.lua">
+		<vocation name="Druid" />
+		<vocation name="Elder Druid" />
+	</instant>
 	<instant group="attack" spellid="111" name="Ethereal Spear" words="exori con" level="23" mana="25" premium="1" range="7" needtarget="1" cooldown="2000" groupcooldown="2000" blockwalls="1" needlearn="0" script="attack/ethereal_spear.lua">
 		<vocation name="Paladin" />
 		<vocation name="Royal Paladin" />
