@@ -26,14 +26,15 @@ function onGetFormulaValues(player, level, magicLevel)
 	return -min, -max
 end
 
+-- Loop the area combats 3x
 function onCastSpell(creature, variant)
 	createCombats(creature.uid, variant)
 	addEvent(createCombats, 1000, creature.uid, variant)
 	addEvent(createCombats, 2000, creature.uid, variant)
-	addEvent(createCombats, 3000, creature.uid, variant)
 	return true
 end
 
+-- cast different cell combats at different times
 function createCombats(cid, variant)
 	combat1:execute(cid, variant)
 	addEvent(executeCombat, 250, combat2, cid, variant)
@@ -41,6 +42,7 @@ function createCombats(cid, variant)
 	addEvent(executeCombat, 750, combat4, cid, variant)
 end
 
+-- cast a single combat. Need this function for addEvent
 function executeCombat(combat, cid, variant)
 	combat:execute(cid, variant)
 end

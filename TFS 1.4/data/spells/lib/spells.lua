@@ -209,6 +209,8 @@ AREADIAGONAL_WALLFIELD = {
 	{1, 1, 0, 0, 0},
 	{1, 0, 0, 0, 0},
 }
+
+-- areas for tornado spell
 AREA_TORNADO_1 = {
 	{0, 0, 0, 0, 0, 0, 0},
 	{0, 0, 0, 0, 0, 0, 0},
