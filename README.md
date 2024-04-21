@@ -8,7 +8,8 @@ Please note that:
 
 # Table of Contents
 - [Question 5](#question-5)
-    - [Commit 6de5d6f](https://github.com/nashmia-riaz/tavernlight-technical/commit/6de5d6f576f48770a9faa7994f53f4a78dd11517)
+    - [Commit 6de5d6f](https://github.com/nashmia-riaz/tavernlight-technical/commit/6de5d6f576f48770a9faa7994f53f4a78dd11517) initial implementation of static cascading spell
+    - [Commit d6b0bf0](https://github.com/nashmia-riaz/tavernlight-technical/commit/d6b0bf066801735938fa3ee39d3d60530e02c9dc) further implementation of cascading randomized spell
     - [TFS 1.4/data/spells/lib/spells.lua](/TFS%201.4/data/spells/lib/spells.lua)
     - [TFS 1.4/data/spells/scripts/attack/tornado storm.lua](/TFS%201.4/data/spells/scripts/attack/tornado_storm.lua)
 - Question 6 (skipped)
@@ -128,8 +129,70 @@ function executeCombat(combat, cid, variant)
 end
 ```
 
+### Further Implementation
+Having achieved what the technical video specified, it didn't make sense for a game design and implementation POV to have such a static spell within the game. Therefore, I started working on randomizing the area of effect within the cascading spell.
+
+My approach was the same as before, except I wanted the 4 areas initially created to be random instead of static. I started by referring to a base area defined as below:
+
+``` lua
+AREA_TORNADO_USABLE = {
+	{0, 0, 0, 1, 0, 0, 0},
+	{0, 0, 1, 0, 1, 0, 0},
+	{0, 1, 0, 1, 0, 1, 0},
+	{1, 0, 1, 3, 1, 0, 1},
+	{0, 1, 0, 1, 0, 1, 0},
+	{0, 0, 1, 0, 1, 0, 0},
+	{0, 0, 0, 1, 0, 0, 0}
+}
+```
+
+My plan was to reference this as the base and then incrementally use the on cells (cells with value 1) for each cascade, keep x amount of cells turned on in my copy, all the while keeping track of which cells had been used. Therefore, these cells would not be used in the future. I would do this by:
+- traversing through the base area
+- using any cell with value 1, and using a 50/50 randomizer to see if i wanted to keep it on
+    - if yes, I would turn this cell off (value to 0) in the base
+    - I would copy the value of 1 over to the new area
+    - if no, I would turn this cell to false 
+- I would then store the newly randomly generated area for future use
+
+
+``` lua
+--generates a random area using cellsToUse. This area, based on the original area, will have random cells of no. specified turned to 1 to be used later
+function generateRandomArea(refArea, cellsToUse)
+	local cellsUsed = 0
+	local area = deepcopy(refArea)
+	while cellsUsed < cellsToUse do
+		for i = 1, #refArea do
+			for j = 1, #refArea[i] do
+				if refArea[i][j] == 1 then
+					local shouldUseCell = math.random(0, 1)
+					
+					if(shouldUseCell == 1 and cellsUsed < cellsToUse) then
+						-- set the area to 1 so it's used in the final area
+						area[i][j] = refArea[i][j]
+						cellsUsed = cellsUsed + 1
+						-- set the cell to 0 in original area so it cannot be reused
+						refArea[i][j] = 0
+					else
+						area[i][j] = 0
+					end
+				end
+			end
+		end
+	end
+	return area
+end
+```
+
+I planned to generate such random areas at runtime. But alas, the server is limited because it cannot set combat area at runtime. Therefore, I instead initialized my 4 combats to these 4 areas upon loading. The result is random as seen below:
+
+![alt text](/Resources//Tornado%20Storm%202.gif)
+
+*Tornado Storm with Random Cascading Cells*
+
 ### Summary
-It was a very intriguing task, especially considering that the engine itself contained errors that needed resolving. The implementation was kept as close to the technical video as possible, meaning that its execution is very static. In the future, the implementation could be random, where it could group and trigger different cells at random.
+It was a very intriguing task, especially considering that the engine itself contained errors that needed resolving. Initially, the implementation was kept as close to the technical video as possible, meaning that its execution is very static. I then added randomization to the spell. However, this randomization is still limited as its only set when the server is initialized, not when the spell is cast. A reason for this limitation is that we cannot set the combat area at runtime. 
+
+In the future, perhaps further randomization can be added by preloading x amount of randomized areas, and picking 4 grouped subareas from that list randomly. This, however, does imply that 4 x X amount of combats would need to be preloaded and preinitialized, and then picked from at runtime. 
 
 ## Question 7
 ### Video Proof
