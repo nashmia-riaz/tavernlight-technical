@@ -20,6 +20,10 @@ Please note that:
     - [OTClient/modules/jump_window/jumpWindow.otmod](/otclient/modules/jump_window/jumpWindow.otmod)
 
 ## Question 5
+
+### How to Produce
+With the [TFS](/TFS%201.4/) set up (provided in the repo), connect with OTClient and run the spell using words '**cast tornado storm**'.
+
 ### Video Proof
 ![alt text](/Resources/Tornado%20Storm.gif)
 
@@ -195,6 +199,10 @@ It was a very intriguing task, especially considering that the engine itself con
 In the future, perhaps further randomization can be added by preloading x amount of randomized areas, and picking 4 grouped subareas from that list randomly. This, however, does imply that 4 x X amount of combats would need to be preloaded and preinitialized, and then picked from at runtime. 
 
 ## Question 7
+
+### How to Produce
+With the [OTClient](/otclient/) set up and launched (provided in the repo), load the module '**jump_window**'. A window should appear with clickable 'Jump!' buttons. There is no need to connect to a server for this as it can be loaded in the main menu.
+
 ### Video Proof
 ![alt text](/Resources/Jump%20Window.gif)
 
