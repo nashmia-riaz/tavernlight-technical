@@ -204,7 +204,8 @@ In the future, perhaps further randomization can be added by preloading x amount
 With the [OTClient](/otclient/) set up and launched (provided in the repo), load the module '**jump_window**'. A window should appear with clickable 'Jump!' buttons. There is no need to connect to a server for this as it can be loaded in the main menu.
 
 ### Video Proof
-![alt text](/Resources/Jump%20Window.gif)
+https://github.com/nashmia-riaz/tavernlight-technical/assets/13387692/e30cea5e-468e-4270-a105-d0ebdfcd2d72
+
 
 ### Code changes
 The commit for the code changes is [caef0fa](https://github.com/nashmia-riaz/tavernlight-technical/commit/caef0fa5b5a1ba2bbd68a4c1a66f8715cfaaf82d).
